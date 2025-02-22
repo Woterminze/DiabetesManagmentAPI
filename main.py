@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
 
-# создание экземпляра fast api, то уйдет в сваггер
+# создание экземпляра fast api, это уйдет в сваггер
 app = FastAPI(
     title="Diabetes Management API",
     description="Self-made API for glucose control. Самописный API для отслеживания уровня глюкозы у диабетиков.",
@@ -13,13 +13,13 @@ app = FastAPI(
 
 # класс для записи глюкозы
 class GlucoseRecord(BaseModel):
-    id: Optional[int] = None #inr or none
+    id: Optional[int] = None #int or none
     user_id: int
     glucose_level: float
     measurement_time: datetime
     notes: Optional[str] = None #str or none
 
-# Типа бд потому что я пока не умею прикручивать БД
+# вместо БД
 glucose_records: List[GlucoseRecord] = [  # в этой переменной будет храниться список объектов, каждый из которых соответствует модели GlucoseRecord
     GlucoseRecord(
         id=1,
