@@ -2,8 +2,6 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
-import logging
-import allure
 
 # создание экземпляра fast api, это уйдет в сваггер
 app = FastAPI(
