@@ -23,7 +23,7 @@ jobs:
       - name: Start FastAPI Server # команды для запуска сервера(фоновый запуск, затем ожидание)
         run: |
           nohup uvicorn main:app --port 3000 --reload &
-          sleep 5  
+          sleep 15  
 
       - name: Run tests # команды для запуска тестов
         run: |
@@ -38,8 +38,8 @@ jobs:
           name: allure-report
           path: allure-report
 
-#      - name: Upload Test Report # команды для сохранения отчета о тесте
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: report
-#          path: report.html
+      - name: Upload Test Report # команды для сохранения отчета о тесте
+        uses: actions/upload-artifact@v3
+        with:
+          name: report
+          path: report.html
