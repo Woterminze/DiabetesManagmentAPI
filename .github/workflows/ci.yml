@@ -22,17 +22,18 @@ jobs:
       - name: Start FastAPI Server
         run: |
           nohup uvicorn main:app --port 3000 --reload &
-    # Ждем, пока сервер не станет доступен, максимум 30 секунд
+          # Ждем, пока сервер не станет доступен, максимум 30 секунд
           for i in {1..30}; do
             if curl --fail http://127.0.0.1:3000/glucose; then
-            echo "Server is up!"
-            exit 0
-          fi
+              echo "Server is up!"
+              exit 0
+            fi
             echo "Waiting for server..."
-              sleep 1
+            sleep 1
           done
           echo "Server did not start in time."
           exit 1
+
 
 
       - name: Run tests
