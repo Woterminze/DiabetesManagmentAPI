@@ -52,6 +52,14 @@ jobs:
         run: |
           pytest --alluredir=allure-results
 
+      - name: Install Allure Commandline
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.21.0/allure-2.21.0.tgz
+          tar -xzf allure-2.21.0.tgz
+          sudo mv allure-2.21.0 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
+          allure --version
+
       # Генерируем отчет Allure из полученных результатов
       - name: Generate Allure Report
         run: |
