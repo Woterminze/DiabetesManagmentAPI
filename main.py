@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
+import logging
 
 # создание экземпляра fast api, это уйдет в сваггер
 app = FastAPI(
@@ -42,13 +43,15 @@ glucose_records: List[GlucoseRecord] = [  # в этой переменной б�
 def get_glucose_records(): # функция, которая выполняется при вызове запроса
     return glucose_records
 
-@app.get("/glucose/{record_id}") #
-def get_glucose_records():
-    return glucose_records
+# метод который я пока не могу заставить работать
+# @app.get("/glucose/{record_id}", response_model=GlucoseRecord)
+# def get_glucose_record(record_id: str):
+#     return {"id": record_id}
+    # raise HTTPException(status_code=404, detail="А ничо тот факт, что нет такой записи???")
 
 @app.post("/glucose")
 def create_glucose_record(record: GlucoseRecord):
-    new_id = max([r.id for r in glucose_records], default=0) + 1 # вычисляем новый айди, если записей нет - 0
+    new_id = max([r.id for r in glucose_records], default=0) + 1
     record.id = new_id
     glucose_records.append(record)
     return record
@@ -66,7 +69,7 @@ def update_glucose_record(record_id: int, updated_record: GlucoseRecord):
 
 @app.delete("/glucose/{record_id}", status_code=204)
 def delete_glucose_record(record_id: int):
-    for index, existing_record in (glucose_records):
+    for index, existing_record in enumerate(glucose_records):
         if existing_record.id == record_id:
             glucose_records.remove(existing_record)
             return
