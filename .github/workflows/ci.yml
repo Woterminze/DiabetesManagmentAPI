@@ -59,14 +59,14 @@ jobs:
 
       # Загружаем отчет Allure как артефакт
       - name: Upload Allure Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report
 
       # (Опционально) Загрузка HTML-отчета pytest-html, если он нужен
       - name: Upload Test Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: report
           path: report.html
