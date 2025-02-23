@@ -22,12 +22,12 @@ jobs:
 
       - name: Start FastAPI Server # команды для запуска сервера(фоновый запуск, затем ожидание)
         run: |
-          nohup uvicorn main:app --host 0.0.0.0 --port 3000 &
+          nohup uvicorn main:app --host 127.0.0.0 --port 3000 &
           sleep 15
 
       - name: Run tests # команды для запуска тестов
         run: |
-          pytest --html=report.html --self-contained-html
+          pytest -v -s test_api.py
 
       - name: Upload Test Report # команды для сохранения отчета о тесте
         uses: actions/upload-artifact@v4
