@@ -40,19 +40,10 @@ glucose_records: List[GlucoseRecord] = [  # в этой переменной б�
 ]
 
 # эндпоинты
-@allure.feature("Glucose Management")
-@allure.story("Get all glucose records")
 @app.get("/glucose") # декоратор, который сообщает апи, что функция ниже должна обрабатывать get-запросы по маршруту "/glucose"
 def get_glucose_records(): # функция, которая выполняется при вызове запроса
     return glucose_records
 
-# метод который я пока не могу заставить работать
-# @app.get("/glucose/{record_id}", response_model=GlucoseRecord)
-# def get_glucose_record(record_id: str):
-#     return {"id": record_id}
-    # raise HTTPException(status_code=404, detail="А ничо тот факт, что нет такой записи???")
-
-@allure.story("Create glucose record")
 @app.post("/glucose")
 def create_glucose_record(record: GlucoseRecord):
     new_id = max([r.id for r in glucose_records], default=0) + 1
@@ -60,7 +51,6 @@ def create_glucose_record(record: GlucoseRecord):
     glucose_records.append(record)
     return record
 
-@allure.story("Update glucose record")
 @app.put("/glucose/{record_id}", response_model=GlucoseRecord)
 def update_glucose_record(record_id: int, updated_record: GlucoseRecord):
     for index, existing_record in enumerate(glucose_records):
@@ -72,7 +62,6 @@ def update_glucose_record(record_id: int, updated_record: GlucoseRecord):
 
     raise HTTPException(status_code=404, detail="А ничо тот факт что записи такой нет???")
 
-@allure.story("Delete glucose record")
 @app.delete("/glucose/{record_id}", status_code=204)
 def delete_glucose_record(record_id: int):
     for index, existing_record in enumerate(glucose_records):

@@ -51,6 +51,4 @@ def test_delete_glucose_record(create_glucose_record):
     record_id = record_id["id"]
     response = requests.delete(f"{BASE_URL}/{record_id}")
     assert response.status_code == 204, f"The status code is {response.status_code}, but should be 204"
-    # этот тест валится из-за того, что я не могу описать get по id. В файле апи явно синтаксическая ошибка, разберусь позже
-    # response = requests.get(f"{BASE_URL}/{record_id}")
-    # assert response.status_code == 404, f"The status code is {response.status_code}, but should be 404"
+

@@ -9,6 +9,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Show current directory
+        run: pwd
+
+      - name: Show files in current directory
+        run: ls -la
+
+      - name: Show files in .github/workflows
+        run: ls -la .github/workflows
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -21,7 +30,9 @@ jobs:
 
       - name: Start FastAPI Server
         run: |
-          nohup uvicorn main:app --port 3000 > server.log 2>&1 &
+          nohup uvicorn main:app --host 127.0.0.1 --port 3000 > server.log 2>&1 &
+          sleep 10
+          cat server.log
           for i in {1..30}; do
             if curl --fail http://127.0.0.1:3000/glucose; then
               echo "Server is up!"
@@ -32,6 +43,10 @@ jobs:
           done
           echo "Server did not start in time."
           exit 1
+
+      - name: Output server logs on failure
+        if: failure()
+        run: cat server.log
 
       - name: Run tests
         run: |
