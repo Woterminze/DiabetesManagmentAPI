@@ -50,7 +50,7 @@ jobs:
 
       - name: Run tests with Allure
         run: |
-          pytest --allure=allure-results
+          pytest --alluredir=allure-results
 
       # Генерируем отчет Allure из полученных результатов
       - name: Generate Allure Report
