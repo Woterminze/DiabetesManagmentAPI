@@ -31,7 +31,7 @@ def test_update_glucose_record(create_glucose_record):
     record_id = original_record["id"]
 
     update_data = {
-        "user_id": 2,
+        "user_id": original_record["user_id"],
         "glucose_level": 13.0,
         "measurement_time": original_record["measurement_time"],
         "notes": "Обновленная авто-тестовая запись"
