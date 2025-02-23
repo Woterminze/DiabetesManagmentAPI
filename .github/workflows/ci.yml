@@ -27,7 +27,7 @@ jobs:
 
       - name: Run tests # команды для запуска тестов
         run: |
-          pytest --html=report.html --self-contained-html
+          pytest -v -s tests/test_api.py
 
       - name: Upload Test Report # команды для сохранения отчета о тесте
         uses: actions/upload-artifact@v4
