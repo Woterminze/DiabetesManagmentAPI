@@ -20,10 +20,20 @@ jobs:
           python -m pip install --upgrade pip  
           pip install fastapi uvicorn pytest pytest-html requests
 
-      - name: Start FastAPI Server # команды для запуска сервера(фоновый запуск, затем ожидание)
+      - name: Start FastAPI Server
         run: |
           nohup uvicorn main:app --port 3000 --reload &
-          sleep 15  
+          for i in {1..30}; do
+            if curl --fail http://127.0.0.1:3000/glucose; then
+              echo "Server is up!"
+              exit 0
+            fi
+            echo "Waiting for server..."
+            sleep 1
+          done
+          echo "Server did not start in time."
+          exit 1
+      
 
       - name: Run tests # команды для запуска тестов
         run: |
