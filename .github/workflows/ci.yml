@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2  # клонируем репу на github actions
+        uses: actions/checkout@v2фддгку  # клонируем репу на github actions
 
       - name: Set up Python
         uses: actions/setup-python@v3 # устанавливаем нужную версию python
@@ -29,8 +29,17 @@ jobs:
         run: |
           pytest --html=report.html --self-contained-html
 
-      - name: Upload Test Report # команды для сохранения отчета о тесте
-        uses: actions/upload-artifact@v3
+      - name: Generate Allure Report # генерация отчета в allure
+        run: |
+          allure generate allure-results -o allure-report --clean
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v2
         with:
-          name: report
-          path: report.html
+          name: allure-report
+          path: allure-report
+
+#      - name: Upload Test Report # команды для сохранения отчета о тесте
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: report
+#          path: report.html
