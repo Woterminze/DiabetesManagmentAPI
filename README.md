@@ -26,8 +26,8 @@
 ## Установка и запуск
 
 1. **Клонируйте репозиторий:**
-   git clone https://github.com/yourusername/diabetes-api.git
-   cd diabetes-api
+   git clone https://github.com/Woterminze/DiabetesManagmentAPI.git
+   cd DiabetesManagmentAPI
 2. **Создайте и активируете venv (виртуальное окружение)**
 - Для Windows
     python -m venv venv
