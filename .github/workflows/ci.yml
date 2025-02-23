@@ -30,7 +30,7 @@ jobs:
           pytest --html=report.html --self-contained-html
 
       - name: Upload Test Report # команды для сохранения отчета о тесте
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: report
           path: report.html
