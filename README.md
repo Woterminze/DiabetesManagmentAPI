@@ -26,34 +26,46 @@
 ## Установка и запуск
 
 1. **Клонируйте репозиторий:**
+   ```
    git clone https://github.com/Woterminze/DiabetesManagmentAPI.git
    cd DiabetesManagmentAPI
-2. **Создайте и активируете venv (виртуальное окружение)**
+   ```
+3. **Создайте и активируете venv (виртуальное окружение)**
 - Для Windows
+```
     python -m venv venv
     venv\Scripts\activate.bat
+```
 - Для macOS/Linux
+```
     python -m venv venv
     source venv/bin/activate
+```
 3. **Установите зависимости**
+```
   pip install fastapi uvicorn pytest pytest-html requests allure-pytest
+```
 Это все бибилиотеки, которые я использовала в API
 4. **Запустите сервер**
-  Для запуска используйте команду: uvicorn main:app --reload --port 3000
+  Для запуска используйте команду: ``` uvicorn main:app --reload --port 3000```
   Сервер будет доступен по адресу: http://127.0.0.1:3000
   Документация Swagger UI доступна по адресу: http://127.0.0.1:3000/docs
 5. **Запуск автотестов**
-  Для запуска автотестов (файл test_api.py) испольузйте команду: pytest --html=report.html --self-contained-html
+  Для запуска автотестов (файл test_api.py) испольузйте команду: ```pytest --html=report.html --self-contained-html```
   Сразу после выполнения автотестов сформируется отчет
 6. **Запуск автотестов с Allure**
   Для запуска тестов и генерации красивого отчета используйте команды: 
-  pytest --alluredir=allure-results   
-  allure serve allure-results
-
+  ```
+pytest --alluredir=allure-results   
+  allure serve allure-results 
+```
   ## Примеры использования API
   1. **Получение списка всех записей о глюкозе (метод GET)**
+```
   curl -X GET "http://127.0.0.1:3000/glucose" -H "accept: application/json"
+```
   2. **Создание записи о глюкозе(метод POST)**
+```
   curl -X POST "http://127.0.0.1:3000/glucose" \
   -H "Content-Type: application/json" \
   -d "{
@@ -62,7 +74,9 @@
     \"measurement_time\": \"2025-02-19T08:00:00\",
     \"notes\": \"Натощак\"
   }"
+```
   3. **Обновление записи о глюкозе(метод PUT)**
+```
   curl -X PUT "http://127.0.0.1:3000/glucose/1" \
   -H "Content-Type: application/json" \
   -d "{
@@ -71,12 +85,15 @@
     \"measurement_time\": \"2025-02-19T09:30:00\",
     \"notes\": \"Обновленная запись\"
   }"
+```
   4. **Удаление записи(метод DELETE)**
+```
   curl -X DELETE "http://127.0.0.1:3000/glucose/1"
+```
 
 ## CI/CD
 Проект настроен на автоматический запуск тестов через GitHub Actions при каждом пуше в репозиторий.
-Пример конфигурационного файла для GitHub Actions находится в .github/workflows/ci.yml и включает следующие шаги:
+Пример конфигурационного файла для GitHub Actions находится в ```.github/workflows/ci.yml``` и включает следующие шаги:
 - Checkout репозитория.
 - Установка Python и зависимостей.
 - Запуск FastAPI-сервера в фоне с wait loop.
