@@ -39,7 +39,7 @@ jobs:
           path: allure-report
 
       - name: Upload Test Report # команды для сохранения отчета о тесте
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: report
           path: report.html
