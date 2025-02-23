@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-
+# Проблема была в модуле allure но я для истории оставлю - полезный код с крутым логированием в случае ошибки
     steps:
       - uses: actions/checkout@v4
 
@@ -48,12 +48,25 @@ jobs:
         if: failure()
         run: cat server.log
 
-      - name: Run tests
+      - name: Run tests with Allure
         run: |
-          pytest --html=report.html --self-contained-html
+          pytest --alluredir=allure-results
 
+      # Генерируем отчет Allure из полученных результатов
+      - name: Generate Allure Report
+        run: |
+          allure generate allure-results -o allure-report --clean
+
+      # Загружаем отчет Allure как артефакт
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: allure-report
+
+      # (Опционально) Загрузка HTML-отчета pytest-html, если он нужен
       - name: Upload Test Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: report
           path: report.html

@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
 
+
 # создание экземпляра fast api, это уйдет в сваггер
 app = FastAPI(
     title="Diabetes Management API",
