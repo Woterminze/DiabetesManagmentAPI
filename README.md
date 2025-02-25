@@ -45,7 +45,8 @@
 ```
   pip install fastapi uvicorn pytest pytest-html requests allure-pytest
 ```
-Это все бибилиотеки, которые я использовала в API
+Это все бибилиотеки, которые я использовала в API  
+
 4. **Запустите сервер**
   Для запуска используйте команду: ``` uvicorn main:app --reload --port 3000```
   Сервер будет доступен по адресу: http://127.0.0.1:3000
