@@ -34,7 +34,7 @@ def test_update_glucose_record(create_glucose_record):
         "user_id": original_record["user_id"],
         "glucose_level": 13.0,
         "measurement_time": original_record["measurement_time"],
-        "notes": "Обновленная авто-тестовая запись"
+        "notes": "Обновленная методом PUT авто-тестовая запись"
     }
     response_update = requests.put(f"{BASE_URL}/{record_id}", json=update_data)
     assert response_update.status_code == 200, f"PUT returned {response_update.status_code}"
