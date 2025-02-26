@@ -1,7 +1,14 @@
 name: Run API Tests
 
-on: [push, pull_request]
-
+on:
+  push:
+    paths:
+      - 'tests/**'
+      - 'main.py'
+  pull_request:
+    paths:
+      - 'tests/**'
+      - 'main.py'
 jobs:
   test:
     runs-on: ubuntu-latest
