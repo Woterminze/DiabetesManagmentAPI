@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from .database import get_connection, init_database, insert_records, read_records
+from .database import get_connection, init_database, insert_records, read_records, search_record_by_id
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
@@ -10,7 +10,7 @@ from datetime import datetime
 app = FastAPI(
     title="Diabetes Management API",
     description="Self-made API for glucose control with SQLite DB. Самописный API для отслеживания уровня глюкозы у диабетиков с бд SQLite.",
-    version="2.0",
+    version="2.1",
 )
 
 init_database()
@@ -63,17 +63,29 @@ def create_glucose_record(record: GlucoseRecordInput):
         raise HTTPException(status_code=500, detail=str(e))
     return {"message": "Запись о глюкозе успешно создана"}
 
-# @app.put("/glucose/{record_id}", response_model=GlucoseRecord)
-# def update_glucose_record(record_id: int, updated_record: GlucoseRecord):
-#     for index, existing_record in enumerate(glucose_records):
-#         if existing_record.id == record_id:
-#             updated_data = updated_record.dict(exclude_unset=True)  # обновляем только то, что передал пользователь, остальное без изменений, так как это удобнее и безопаснее для пользователей, и вообще мой апи - что хочу то и делаю!
-#             updated_glucose_record = GlucoseRecord(**{**existing_record.dict(), **updated_data, "id": record_id})
-#             glucose_records[index] = updated_glucose_record
-#             return updated_glucose_record
+@app.get("/glucose/{record_id}")
+def get_glucose_record_by_id(record_id: int):
+    record = search_record_by_id(record_id)
+    if record is None:
+        raise HTTPException(status_code=404, detail=str("А ничо тот факт что записи с таким id нет??"))
+    result = {
+        "id": record[0],
+        "user_id": record[1],
+        "glucose_level": record[2],
+        "glucose_measure": record[3],
+        "measurement_time": record[4],
+        "notes": record[5]
+    }
+    return result
+
+
+# @app.put("/glucose/{record_id}", glucose_records=GlucoseRecordInput, updated_record=GlucoseRecordUpdate)
+# def update_glucose_record(record: int, GlucoseRecord):
+#     try:
+#         insert_records(record.user_id, record.glucose_level, record.glucose_measure, measurement_time_str, record.notes)
 #
 #     raise HTTPException(status_code=404, detail="А ничо тот факт что записи такой нет???")
-#
+# #
 # @app.delete("/glucose/{record_id}", status_code=204)
 # def delete_glucose_record(record_id: int):
 #     for index, existing_record in enumerate(glucose_records):

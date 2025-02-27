@@ -15,7 +15,7 @@ def init_database():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
         glucose_level FLOAT NOT NULL,
-        glucose_measure STRING,
+        glucose_measure TEXT CHECK(glucose_measure IN ('mg/dl', 'mmol/l')),
         measurement_time DATETIME NOT NULL,
         notes TEXT
         )
@@ -40,6 +40,15 @@ def read_records():
     records = cursor.fetchall()
     connect.close()
     return records
+
+def search_record_by_id(record_id):
+    connect = get_connection()
+    cursor = connect.cursor()
+    # query = "SELECT * FROM glucose_records WHERE id = ?"
+    cursor.execute("SELECT * FROM glucose_records WHERE id = ?", (record_id,))
+    record = cursor.fetchone()
+    connect.close()
+    return record
 
 
 
